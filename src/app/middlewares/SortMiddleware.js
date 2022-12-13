@@ -3,6 +3,12 @@ module.exports = function SortMiddleware(req, res, next) {
 		sortBy: 'createdAt',
 		sortType: 'desc',
 	};
+	if (req.query.sortBy) {
+		Object.assign(res.locals._sort, {
+			sortBy: req.query.sortBy,
+			sortType: req.query.sortType,
+		});
+	}
 
 	if (req.query.category) {
 		const categories = {
@@ -20,13 +26,6 @@ module.exports = function SortMiddleware(req, res, next) {
 		res.locals.category_name = categories[req.query.category];
 	} else {
 		res.locals.category_name = 'All Products';
-	}
-
-	if (req.query.sortBy) {
-		Object.assign(res.locals._sort, {
-			sortBy: req.query.sortBy,
-			sortType: req.query.sortType,
-		});
 	}
 
 	next();

@@ -90,13 +90,28 @@
 				<a class='nav-icon position-relative text-decoration-none' href='#'>
 					<i class='fa fa-fw fa-cart-arrow-down text-dark mr-1'></i>
 					<span
-						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>7</span>
+						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>0</span>
 				</a>
+				{{#if user}}
+				<div class='nav-icon position-relative text-decoration-none'>
+					Hello {{user.lastName}}
+				</div>
+				<a class='nav-icon position-relative text-decoration-none' href='/me'>
+					<i class='fa fa-fw fa-user text-dark mr-3'></i>
+					<span
+						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>Profile</span>
+				</a>
+				<div class="topbar-divider d-none d-sm-block"></div>
+				<form method="POST" action="/auth/logout?_method=DELETE">
+					<button type="submit">Log out</button>
+				</form>
+				{{else}}
 				<a class='nav-icon position-relative text-decoration-none' href='/auth/login'>
 					<i class='fa fa-fw fa-user text-dark mr-3'></i>
 					<span
-						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>+99</span>
+						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>Login</span>
 				</a>
+				{{/if}}
 			</div>
 		</div>
 

@@ -9,6 +9,7 @@ const ProductSchema = new Schema(
 		price: { type: Number, required: true },
 		brand: { type: String, required: true },
 		description: { type: String },
+		thumbnail: { type: String },
 		images: { type: Array },
 		videoId: { type: String, required: true },
 		level: { type: String },

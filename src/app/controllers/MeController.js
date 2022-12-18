@@ -1,5 +1,4 @@
-const Customer = require('../models/Customer');
-const { multipleMongooseToObject } = require('../../util/mongoose');
+const CustomerService = require('../models/CustomerService');
 
 class MeController {
 	//[GET] /settings
@@ -14,14 +13,13 @@ class MeController {
 
 	//[GET] /
 	showProfile(req, res, next) {
-		console.log(req.query);
 		let message = req.query.message === '' ? '' : req.query.message;
 		res.render('me/index', { user: req.user, message: message });
 	}
 
 	//[PUT] /
-	updateProfile(req, res, next) {
-		Customer.updateOne({ _id: req.user._id }, req.body)
+	async updateProfile(req, res, next) {
+		CustomerService.updateOne(req.user._id, req.body)
 			.then(() => {
 				res.redirect('/me?message=Profile updated!');
 			})

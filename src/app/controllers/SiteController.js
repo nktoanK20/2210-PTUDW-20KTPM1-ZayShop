@@ -1,5 +1,3 @@
-const { response } = require('express');
-
 class SiteController {
 	// [GET] /about
 	contact(req, res, next) {

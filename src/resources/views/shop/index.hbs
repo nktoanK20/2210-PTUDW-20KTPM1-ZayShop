@@ -6,7 +6,7 @@
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
                 <div class="pb-3">
-                    <a class="pb-3 h3 text-decoration-none" href="/shop">
+                    <a class="pb-3 h3 text-decoration-none" href="/shop?category=all">
                         All
                     </a>
                 </div>
@@ -93,6 +93,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="category" value={{category}}></input>
+                    <input id="input-page-link" type="hidden" name="page" value="{{currentPage}}"></input>
                     <div class="col-md-1">
                         <button type="submit"
                             class="btn btn-primary btn-sm sort-products-submit-btn pb-1 mt-1">Sort</button>
@@ -104,20 +105,19 @@
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="/img/shop_01.jpg" />
+                            <img class="card-img rounded-0 img-fluid" src="{{this.thumbnail}}" />
                             <div
                                 class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a class="btn btn-success text-white" href="/shop/{{this._id}}"><i
-                                                class="far fa-heart"></i></a>
+                                        <a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a>
                                     </li>
                                     <li>
                                         <a class="btn btn-success text-white mt-2" href="/shop/{{this._id}}"><i
                                                 class="far fa-eye"></i></a>
                                     </li>
                                     <li>
-                                        <a class="btn btn-success text-white mt-2" href="/shop/{{this._id}}"><i
+                                        <a class="btn btn-success text-white mt-2" href="#"><i
                                                 class="fas fa-cart-plus"></i></a>
                                     </li>
                                 </ul>
@@ -126,7 +126,7 @@
                         <div class="card-body">
                             <a href="/shop/{{this._id}}" class="h3 text-decoration-none">{{this.name}}</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
+                                {{!-- <li>M/L/X/XL</li> --}}
                                 <li class="pt-2">
                                     <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                     <span
@@ -154,19 +154,9 @@
                 </div>
                 {{/each}}
             </div>
-            <div div="row">
+            <div class="row">
                 <ul class="pagination pagination-lg justify-content-end">
-                    <li class="page-item disabled">
-                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
-                            tabindex="-1">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
-                            href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
-                    </li>
+                    {{{paginate totalPages currentPage}}}
                 </ul>
             </div>
         </div>
@@ -180,14 +170,26 @@
 <div hidden="true" id="previous-sort-stored" sortBy={{_sort.sortBy}} sortType={{_sort.sortType}}></div>
 
 <script>
+    var sortProductForm;
+    var sortByOptions;
+    var sortTypeOptions;
+    var sortProductsSubmitBtn;
+    var previousSortStored;
+    var pageInput;
     document.addEventListener('DOMContentLoaded', function () {
-        var sortProductForm = $('form[name="sort-product-form"]');
-        var sortByOptions = $('select.sort-by-options');
-        var sortTypeOptions = $('select.sort-type-options');
-        var sortProductsSubmitBtn = $('.sort-products-submit-btn');
-        var previousSortStored = document.getElementById('previous-sort-stored');
+        sortProductForm = $('form[name="sort-product-form"]');
+        sortByOptions = $('select.sort-by-options');
+        sortTypeOptions = $('select.sort-type-options');
+        sortProductsSubmitBtn = $('.sort-products-submit-btn');
+        previousSortStored = document.getElementById('previous-sort-stored');
+        pageInput = document.getElementById('input-page-link');
 
         sortByOptions.val(previousSortStored.getAttribute("sortBy")).change();
         sortTypeOptions.val(previousSortStored.getAttribute("sortType")).change();
     });
+
+    function inputPageForForm(page) {
+        pageInput.value = page;
+        sortProductForm.submit();
+    }
 </script>

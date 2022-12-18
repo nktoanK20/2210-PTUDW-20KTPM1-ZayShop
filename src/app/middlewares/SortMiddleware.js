@@ -12,6 +12,7 @@ module.exports = function SortMiddleware(req, res, next) {
 
 	if (req.query.category) {
 		const categories = {
+			all: 'All Products',
 			shirts_men: 'Shirts Men',
 			shirts_women: 'Shirts Women',
 			shirts_others: 'Shirts Others',
@@ -25,6 +26,7 @@ module.exports = function SortMiddleware(req, res, next) {
 		res.locals.category = req.query.category;
 		res.locals.category_name = categories[req.query.category];
 	} else {
+		res.locals.category = 'all';
 		res.locals.category_name = 'All Products';
 	}
 

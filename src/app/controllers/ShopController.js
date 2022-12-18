@@ -1,48 +1,38 @@
-const Product = require('../models/Product');
-const {
-	mongooseToObject,
-	multipleMongooseToObject,
-} = require('../../util/mongoose');
-const { response } = require('express');
+const ProductService = require('../models/ProductService');
 
 class ShopController {
 	// [GET] /:id (detail of a product in shop)
-	single(req, res, next) {
-		Product.findOne({})
-			.then((product) => {
-				res.render('shop/single', {
-					product: mongooseToObject(product),
-				});
-			})
-			.catch(next);
+	async single(req, res, next) {
+		const product = await ProductService.getOne('_id', req.params.id);
+		console.log(product);
+		res.render('shop/single', { product });
 	}
 
 	// [GET] /index (shop section homepage)
-	index(req, res, next) {
-		let productQuery;
-		if (req.query.category) {
-			productQuery = Product.find({ category: req.query.category });
-		} else {
-			productQuery = Product.find();
+	async index(req, res, next) {
+		let page = 0;
+		if (req.query.page > 0) {
+			page = req.query.page - 1;
 		}
+		const limit = process.env.LIMIT_PER_PAGE;
 
-		if (req.query.sortBy) {
-			productQuery = productQuery.sort({
-				[req.query.sortBy]: req.query.sortType,
-			});
-		} else {
-			productQuery = productQuery.sort({
-				createdAt: 'desc',
-			});
-		}
+		let products = await ProductService.get(
+			req.query.category,
+			req.query.sortBy,
+			req.query.sortType,
+			page,
+			limit,
+		);
 
-		Promise.all([productQuery])
-			.then(([products]) => {
-				res.render('shop/index', {
-					products: multipleMongooseToObject(products),
-				});
-			})
-			.catch(next);
+		const totalPages = Math.ceil(
+			(await ProductService.count(req.query.category)) / limit,
+		);
+
+		res.render('shop/index', {
+			products,
+			totalPages,
+			currentPage: page + 1,
+		});
 	}
 }
 

@@ -1,13 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const Customer = require('../../app/models/Customer');
-const { mongooseToObject } = require('../../util/mongoose');
+const CustomerService = require('../../app/models/CustomerService');
 
 function initialize(passport) {
 	// function to authenticate users
 	const authenticateUsers = async (email, password, done) => {
 		//get users by email
-		const user = await Customer.findOne({ email: email });
+		const user = await CustomerService.getOne(null, email);
 		if (!user) {
 			return done(null, false, {
 				message: 'No user found with that email.',
@@ -33,11 +32,9 @@ function initialize(passport) {
 			authenticateUsers,
 		),
 	);
-	passport.serializeUser((user, done) => done(null, user.id));
-	passport.deserializeUser((id, done) => {
-		Customer.findById(id).then((user) =>
-			done(null, mongooseToObject(user)),
-		);
+	passport.serializeUser((user, done) => done(null, user._id));
+	passport.deserializeUser((_id, done) => {
+		CustomerService.getOne(_id, null).then((user) => done(null, user));
 	});
 }
 

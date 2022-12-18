@@ -52,7 +52,75 @@ app.engine(
 	handlebars.engine({
 		extname: '.hbs',
 		helpers: {
-			sum: (a, b) => a + b,
+			paginate: (totalPages, currentPage) => {
+				let result = '';
+				for (let i = 1; i <= totalPages; i++) {
+					if (currentPage === i) {
+						result += `<li class="page-item">
+                        <a href="#" onclick="inputPageForForm(${i})" class="active page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">${i}</a>
+                		</li>`;
+					} else {
+						result += `<li class="page-item">
+                        <a href=# onclick="inputPageForForm(${i})" class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">${i}</a>
+						</li>`;
+					}
+				}
+				return result;
+			},
+			imgSliderProduct: (imgs) => {
+				let result = '';
+				let numImgs = 0;
+				if (imgs) {
+					numImgs = imgs.length;
+				}
+
+				let numSliders = Math.ceil(numImgs / 3);
+				let imgPerSlider = 3;
+
+				let noImg = 0;
+				for (let i = 0; i < numSliders; i++) {
+					if (i == 0) {
+						result += `<div class="carousel-item active">
+						<div class="row">`;
+
+						for (
+							let j = 0;
+							j < imgPerSlider, noImg < numImgs;
+							j++, noImg++
+						) {
+							result += `<div class="col-4">
+							<a href="#">
+								<img class="card-img img-fluid" src="${imgs[noImg]}"
+									alt="Product Image ${noImg}" />
+							</a>
+						</div>`;
+						}
+
+						result += `</div>
+						</div>`;
+					} else {
+						result += `<div class="carousel-item">
+						<div class="row">`;
+
+						for (
+							let j = 0;
+							j < imgPerSlider, noImg < numImgs;
+							j++, noImg++
+						) {
+							result += `<div class="col-4">
+							<a href="#">
+								<img class="card-img img-fluid" src="${imgs[noImg]}"
+									alt="Product Image ${noImg}" />
+							</a>
+						</div>`;
+						}
+
+						result += `</div>
+						</div>`;
+					}
+				}
+				return result;
+			},
 		},
 	}),
 );

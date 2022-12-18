@@ -4,12 +4,24 @@ const passport = require('passport');
 const initializePassport = require('../config/passport');
 
 const authController = require('../app/controllers/AuthController');
-const checkAuthenticatedMiddleware = require('../app/middlewares/CheckAuthenticatedMiddleware');
 
 initializePassport(passport);
+function checkAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/');
+}
 
-router.get('*', checkAuthenticatedMiddleware);
-router.post('*', checkAuthenticatedMiddleware);
+function checkNotAuthenticated(req, res, next) {
+	if (!req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/');
+}
+
+router.get('*', checkNotAuthenticated);
+router.post('*', checkNotAuthenticated);
 
 router.get('/register', authController.showRegister);
 router.post('/register', authController.handleRegister);
@@ -24,7 +36,7 @@ router.post(
 	}),
 );
 
-router.delete('/logout', (req, res, next) => {
+router.delete('/logout', checkAuthenticated, (req, res, next) => {
 	req.logout(function (err) {
 		if (err) {
 			return next(err);

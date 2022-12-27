@@ -68,14 +68,35 @@
         <div class="col-lg-9">
             <form name="sort-product-form" method="GET" action="/shop">
                 <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-inline shop-top-menu pb-3 pt-1">
-                            <li class="list-inline-item">
-                                <h2 class="text-dark text-decoration-none mr-3" href="#">{{category_name}}</h2>
-                            </li>
-                        </ul>
+                    <ul class="list-inline shop-top-menu pb-3 pt-1">
+                        <li class="list-inline-item">
+                            <h2 class="text-dark text-decoration-none mr-3" href="#">{{category_name}}</h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 mt-1 ml-2">
+                        <div class="row">
+                            <label class="col-md-3 text-md-center">
+                                <strong>Price (₫) From:</strong>
+                            </label>
+
+                            <input class="col-md-3" type="number" name="minPrice" value="0" min="0">
+
+                            <label class="col-md-1">
+                                <strong>To</strong>
+                            </label>
+
+                            <input class="col-md-3" type="number" name="maxPrice" value="0" min="0">
+
+                            <label class="col-md text-md-end">
+                                <strong>Sort By:</strong>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-md-3 pb-4">
+
+
+                    <div class="col-md-2 pb-4">
                         <div class="d-flex">
                             <select class="form-control sort-by-options" name="sortBy">
                                 <option value="name">Product Name</option>
@@ -94,7 +115,7 @@
                     </div>
                     <input type="hidden" name="category" value={{category}}></input>
                     <input id="input-page-link" type="hidden" name="page" value="{{currentPage}}"></input>
-                    <div class="col-md-1">
+                    <div class="col-md">
                         <button type="submit"
                             class="btn btn-primary btn-sm sort-products-submit-btn pb-1 mt-1">Sort</button>
                     </div>

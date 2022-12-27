@@ -19,6 +19,7 @@ class CustomerService {
 
 	save(data) {
 		const customer = new Customer(data);
+		customer.password = customer.encryptPassword(data.password);
 		return customer.save();
 	}
 

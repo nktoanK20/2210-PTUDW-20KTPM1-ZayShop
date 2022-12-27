@@ -87,14 +87,14 @@
 					data-bs-target='#templatemo_search'>
 					<i class='fa fa-fw fa-search text-dark mr-2'></i>
 				</a>
-				<a class='nav-icon position-relative text-decoration-none' href='#'>
+				<a class='nav-icon position-relative text-decoration-none' href='/shop/cart'>
 					<i class='fa fa-fw fa-cart-arrow-down text-dark mr-1'></i>
 					<span
 						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>0</span>
 				</a>
 				{{#if user}}
 				<div class='nav-icon position-relative text-decoration-none'>
-					Hello {{user.lastName}}
+					<strong>Hello {{user.lastName}}</strong>
 				</div>
 				<a class='nav-icon position-relative text-decoration-none' href='/me'>
 					<i class='fa fa-fw fa-user text-dark mr-3'></i>
@@ -102,9 +102,12 @@
 						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>Profile</span>
 				</a>
 				<div class="topbar-divider d-none d-sm-block"></div>
-				<form method="POST" action="/auth/logout?_method=DELETE">
-					<button type="submit">Log out</button>
-				</form>
+				<a class='m-3 nav-icon position-relative text-decoration-none' href='/me'>
+
+					<form id="logout-form" method="POST" action="/auth/logout?_method=DELETE">
+						<button class="" type="submit"> <i class='fa fa-sign-out-alt text-dark'></i> Log out</button>
+					</form>
+				</a>
 				{{else}}
 				<a class='nav-icon position-relative text-decoration-none' href='/auth/login'>
 					<i class='fa fa-fw fa-user text-dark mr-3'></i>

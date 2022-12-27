@@ -30,7 +30,6 @@ app.use(
 		extended: true,
 	}),
 );
-app.use(flash());
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
@@ -38,6 +37,7 @@ app.use(
 		saveUninitialized: false,
 	}),
 );
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -85,13 +85,13 @@ app.engine(
 
 						for (
 							let j = 0;
-							j < imgPerSlider, noImg < numImgs;
+							(j < imgPerSlider) & (noImg < numImgs);
 							j++, noImg++
 						) {
 							result += `<div class="col-4">
 							<a href="#">
 								<img class="card-img img-fluid" src="${imgs[noImg]}"
-									alt="Product Image ${noImg}" />
+									alt="Product Image ${noImg + 1}" />
 							</a>
 						</div>`;
 						}
@@ -104,7 +104,7 @@ app.engine(
 
 						for (
 							let j = 0;
-							j < imgPerSlider, noImg < numImgs;
+							(j < imgPerSlider) & (noImg < numImgs);
 							j++, noImg++
 						) {
 							result += `<div class="col-4">

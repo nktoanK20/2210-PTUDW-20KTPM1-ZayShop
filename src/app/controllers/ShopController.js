@@ -1,6 +1,11 @@
 const ProductService = require('../models/ProductService');
 
 class ShopController {
+	// [GET] /cart (shop cart page)
+	showCart(req, res, next) {
+		res.render('shop/cart');
+	}
+
 	// [GET] /:id (detail of a product in shop)
 	async single(req, res, next) {
 		const product = await ProductService.getOne('_id', req.params.id);

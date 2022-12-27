@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const initializePassport = require('../config/passport');
+const { body, validationResult } = require('express-validator');
 
 const authController = require('../app/controllers/AuthController');
 
@@ -24,12 +25,23 @@ router.get('*', checkNotAuthenticated);
 router.post('*', checkNotAuthenticated);
 
 router.get('/register', authController.showRegister);
-router.post('/register', authController.handleRegister);
+router.post(
+	'/register',
+	body('email', 'Email is invalid.').isEmail(),
+	body('password', 'Password must contain at least 6 characters').isLength({
+		min: 6,
+	}),
+	passport.authenticate('local.signup', {
+		successRedirect: '/',
+		failureRedirect: '/auth/register',
+		failureFlash: true,
+	}),
+);
 router.get('/forgot-password', authController.showForgotPassword);
 router.get('/login', authController.showLogin);
 router.post(
 	'/login',
-	passport.authenticate('local', {
+	passport.authenticate('local.signin', {
 		successRedirect: '/',
 		failureRedirect: '/auth/login',
 		failureFlash: true,

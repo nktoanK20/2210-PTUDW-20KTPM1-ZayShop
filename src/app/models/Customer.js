@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const CustomerSchema = new Schema(
 	{
@@ -16,5 +16,13 @@ const CustomerSchema = new Schema(
 		timestamps: true,
 	},
 );
+
+CustomerSchema.methods.encryptPassword = function (password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
+};
+
+CustomerSchema.methods.validatePassword = function (password) {
+	return bcrypt.compareSync(password, this.password);
+};
 
 module.exports = mongoose.model('Customer', CustomerSchema);

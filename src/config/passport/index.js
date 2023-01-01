@@ -31,7 +31,7 @@ function initialize(passport) {
 	};
 
 	// function to authenticate users
-	const authenticateUsers = async (email, password, done) => {
+	const authenticateUsers = async (req, email, password, done) => {
 		//get users by email
 		const user = await CustomerService.getOne(null, email);
 		if (!user) {
@@ -69,6 +69,7 @@ function initialize(passport) {
 			{
 				usernameField: 'email',
 				passwordField: 'password',
+				passReqToCallback: true,
 			},
 			authenticateUsers,
 		),

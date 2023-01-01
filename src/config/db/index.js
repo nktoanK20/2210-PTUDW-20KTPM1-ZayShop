@@ -7,9 +7,12 @@ async function connect() {
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
 			})
-			.then(() => console.log('Connecting to MongoDB succeeded.'));
+			.then((m) => {
+				console.log('Connecting to MongoDB succeeded.');
+				return m.connection.getClient();
+			});
 	} catch (error) {
-		console.log('Connecting to MongoDB failed.');
+		console.log('Connecting to MongoDB failed.', error);
 	}
 }
 

@@ -9,8 +9,10 @@ const CustomerSchema = new Schema(
 		firstName: { type: String, required: true },
 		lastName: { type: String, required: true },
 		phoneNumber: { type: String },
-		addresses: { type: Array },
+		address: { type: Object },
 		payments: { type: Array },
+		cart: { type: Object },
+		enabled: { type: Boolean },
 	},
 	{
 		timestamps: true,

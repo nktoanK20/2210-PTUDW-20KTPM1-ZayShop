@@ -32,7 +32,7 @@ $(document).ready(function () {
 		var val = $('#var-value').html();
 		val = val == '1' ? val : val - 1;
 		$('#var-value').html(val);
-		$('#product-quanity').val(val);
+		$('#product-quantity').val(val);
 		return false;
 	});
 	$('#btn-plus').click(function () {
@@ -40,7 +40,7 @@ $(document).ready(function () {
 		var stock = Number($('#product-stock').html());
 		val = val == stock ? val : val + 1;
 		$('#var-value').html(val);
-		$('#product-quanity').val(val);
+		$('#product-quantity').val(val);
 		return false;
 	});
 	$('.btn-size').click(function () {

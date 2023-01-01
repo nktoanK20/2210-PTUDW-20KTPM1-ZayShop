@@ -91,8 +91,8 @@
                             <h6>In Stock: <span id="product-stock">{{product.quantity}}</span></h6>
                         </ul>
 
-                        <form action="" method="GET">
-                            <input type="hidden" name="product-title" value="Activewear" />
+                        <form name="addToCartForm" action="/shop/add-to-cart/{{product._id}}?_method=PUT" method="POST">
+                            <input id="product-quantity" type="hidden" name="quantity" value="1">
                             <div class="row">
                                 {{!-- <div class="col-auto">
                                     <ul class="list-inline pb-3">
@@ -118,8 +118,6 @@
                                     <ul class="list-inline pb-3">
                                         <li class="list-inline-item text-right">
                                             Quantity
-                                            <input type="hidden" name="product-quanity" id="product-quanity"
-                                                value="1" />
                                         </li>
                                         <li class="list-inline-item">
                                             <span class="btn btn-success" id="btn-minus">-</span>

@@ -64,7 +64,7 @@ class ShopController {
 	// [POST] /checkout
 	async createOrder(req, res, next) {
 		let shippingDetails = {};
-		shippingDetails['firtName'] = req.body.firstName;
+		shippingDetails['firstName'] = req.body.firstName;
 		shippingDetails['lastName'] = req.body.lastName;
 		shippingDetails['address'] = req.body.address;
 		shippingDetails['country'] = req.body.country;
@@ -78,7 +78,7 @@ class ShopController {
 
 		await OrderService.save(order);
 
-		res.redirect('/me?message=Create order successful!');
+		res.redirect('/me/orders?message=Create order successful!');
 	}
 
 	// [GET] /:id (detail of a product in shop)

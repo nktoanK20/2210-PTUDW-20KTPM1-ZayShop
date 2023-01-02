@@ -1,14 +1,14 @@
-<form action="/shop/checkout" method="POST" class="h-100 gradient-custom">
+<form action="/me/orders" method="GET" class="h-100 gradient-custom">
     <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
-            <h1 class="text-center">Checkout</h1>
+            <h1 class="text-center">Order Details: {{order._id}}</h1>
             <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header py-3">
                         <h5 class="mb-0">All - {{totalItems}} item(s)</h5>
                     </div>
                     <div class="card-body">
-                        {{#each items}}
+                        {{#each order.items}}
                         <!-- Single item -->
                         <div class="row">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
@@ -64,40 +64,45 @@
                         <div class="row">
                             <div class="col">
                                 <span for="firstName">First name <br></span>
-                                <input type="text" name="firstName" value="{{user.firstName}}" required="true" />
+                                <input disabled="true" value="{{order.shippingDetails.firstName}}" type="text"
+                                    name="firstName" required="true" />
                             </div>
                             <div class="col">
                                 <span for="lastName">Last name <br></span>
-                                <input type="text" name="lastName" value="{{user.lastName}}" required="true" />
+                                <input disabled="true" value="{{order.shippingDetails.lastName}}" type="text"
+                                    name="lastName" required="true" />
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
                                 <span for="address">Address <br></span>
-                                <textarea name="address" style="width: 100%" required="true"></textarea>
+                                <textarea disabled="true" name="address" style="width: 100%"
+                                    required="true">{{order.shippingDetails.address}}</textarea>
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
                                 <span for="country">Country <br></span>
-                                <select name="country" class="py-1" required="true">
-                                    <option value="Viet Nam">Viet Nam</option>
+                                <select disabled="true" name="country" class="py-1" required="true">
+                                    <option value="Viet Nam" selected="true">Viet Nam</option>
                                 </select>
                             </div>
                             <div class="col">
                                 <span for="city">City <br></span>
-                                <input type="text" name="city" required="true" />
+                                <input value="{{order.shippingDetails.city}}" disabled="true" type="text" name="city"
+                                    required="true" />
                             </div>
                             <div class="col">
                                 <span for="zipCode">Zip code <br></span>
-                                <input type="number" name="zipCode" min="0" required="true" />
+                                <input value="{{order.shippingDetails.zipCode}}" disabled="true" type="number"
+                                    name="zipCode" min="0" required="true" />
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col">
                                 <span for="paymentMethod">Payment method <br></span>
-                                <select name="paymentMethod" class="py-1" required="true">
-                                    <option value="pay when delivered">Pay when delivered</option>
+                                <select disabled="true" name="paymentMethod" class="py-1" required="true">
+                                    <option value="pay when delivered" selected="true">Pay when delivered</option>
                                 </select>
                             </div>
                         </div>
@@ -112,11 +117,11 @@
                             <li
                                 class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                 Items
-                                <span>{{totalPrice}}₫</span>
+                                <span>{{order.totalPrice}}₫</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 Shipping
-                                <span>{{shippingPrice}}₫</span>
+                                <span>0₫</span>
                             </li>
                             <li
                                 class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
@@ -126,15 +131,15 @@
                                         <p class="mb-0">(including VAT)</p>
                                     </strong>
                                 </div>
-                                <span><strong>{{totalPrice}}₫</strong></span>
+                                <span><strong>{{order.totalPrice}}₫</strong></span>
                             </li>
                         </ul>
-                        <button type="submit" class="btn btn-danger btn-lg btn-block">
-                            Confirm Payment
-                        </button>
+
                     </div>
                 </div>
-
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Return
+                </button>
             </div>
         </div>
     </div>

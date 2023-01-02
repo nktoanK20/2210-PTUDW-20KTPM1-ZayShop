@@ -12,9 +12,11 @@ class OrderService {
 	}
 
 	get(customerId) {
-		return Order.find({ customerId: customerId }).then((order) => {
-			return mongooseToObject(order);
-		});
+		return Order.find({ customerId: customerId })
+			.sort({ createdAt: 'desc' })
+			.then((orders) => {
+				return multipleMongooseToObject(orders);
+			});
 	}
 
 	save(data) {

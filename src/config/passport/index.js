@@ -24,6 +24,14 @@ function initialize(passport) {
 		}
 		try {
 			newUser = await CustomerService.save(req.body);
+
+			if (req.session.cart) {
+				newUser.cart = req.session.cart;
+			} else {
+				newUser.cart = {};
+			}
+			await CustomerService.updateOne(newUser._id, newUser);
+
 			return done(null, newUser);
 		} catch (err) {
 			return done(err);
@@ -41,6 +49,14 @@ function initialize(passport) {
 		}
 		try {
 			if (bcrypt.compareSync(password, user.password)) {
+				if (!user.cart) {
+					if (req.session.cart) {
+						user.cart = req.session.cart;
+					} else {
+						user.cart = {};
+					}
+					await CustomerService.updateOne(user._id, user);
+				}
 				return done(null, user);
 			} else {
 				return done(null, false, { message: 'Password Incorrect.' });

@@ -9,9 +9,11 @@ router.use((req, res, next) => {
 	res.redirect('/auth/login');
 });
 
-router.get('/settings', meController.showSettings);
-router.put('/settings', meController.updateSettings);
-router.get('/', meController.showProfile);
-router.put('/', meController.updateProfile);
+router.get('/profile', meController.showProfileSettings);
+router.put('/profile', meController.updateProfileSettings);
+router.get('/account', meController.showAccountSettings);
+router.put('/account', meController.updateAccountSettings);
+router.get('/order-detail/:id', meController.showOrderDetail);
+router.get('/orders', meController.showOrders);
 
 module.exports = router;

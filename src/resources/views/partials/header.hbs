@@ -106,14 +106,13 @@
 				<div class='nav-icon position-relative text-decoration-none'>
 					<strong>Hello {{user.lastName}}</strong>
 				</div>
-				<a class='nav-icon position-relative text-decoration-none' href='/me'>
+				<a class='nav-icon position-relative text-decoration-none' href='/me/profile'>
 					<i class='fa fa-fw fa-user text-dark mr-3'></i>
 					<span
 						class='position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark'>Profile</span>
 				</a>
 				<div class="topbar-divider d-none d-sm-block"></div>
-				<a class='m-3 nav-icon position-relative text-decoration-none' href='/me'>
-
+				<a class='m-3 nav-icon position-relative text-decoration-none' href='!#'>
 					<form id="logout-form" method="POST" action="/auth/logout?_method=DELETE">
 						<button class="" type="submit"> <i class='fa fa-sign-out-alt text-dark'></i> Log out</button>
 					</form>

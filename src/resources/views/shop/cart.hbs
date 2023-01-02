@@ -29,7 +29,8 @@
                             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                 <!-- Data -->
                                 <p><strong>{{this.product.name}}</strong></p>
-                                <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                                <button onclick="removeItemFromCart('{{this.product._id}}');" type="button"
+                                    class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
                                     title="Remove item">
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -131,3 +132,17 @@
 
     </div>
 </form>
+
+{{!-- Remove item form cart form --}}
+<form id='remove-item-form' method="POST">
+</form>
+
+<script>
+    function removeItemFromCart(productId) {
+        let removeItemForm = document.getElementById('remove-item-form');
+        let action = "/shop/remove-from-cart/" + productId.toString() + "?_method=DELETE";
+        console.log(action);
+        removeItemForm.action = action;
+        removeItemForm.submit();
+    }
+</script>

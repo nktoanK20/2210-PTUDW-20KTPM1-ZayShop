@@ -49,6 +49,13 @@ function initialize(passport) {
 		}
 		try {
 			if (bcrypt.compareSync(password, user.password)) {
+				if (!user.enabled) {
+					return done(null, false, {
+						message:
+							'Your account has been banned. Please contact admin for more information',
+					});
+				}
+
 				if (!user.cart) {
 					if (req.session.cart) {
 						user.cart = req.session.cart;

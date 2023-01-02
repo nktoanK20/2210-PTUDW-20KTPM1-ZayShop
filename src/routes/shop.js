@@ -12,6 +12,7 @@ function checkAuthenticated(req, res, next) {
 
 router.get('/cart', shopController.showCart);
 router.put('/add-to-cart/:id', shopController.addToCart);
+router.delete('/remove-from-cart/:id', shopController.removeFromCart);
 router.get('/checkout', checkAuthenticated, shopController.showCheckout);
 router.post('/checkout', checkAuthenticated, shopController.createOrder);
 

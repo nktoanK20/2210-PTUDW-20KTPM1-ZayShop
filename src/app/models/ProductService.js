@@ -11,10 +11,12 @@ class ProductService {
 		});
 	}
 
-	get(category, sortBy, sortType, page, limit) {
+	get(category, sortBy, sortType, minPrice, maxPrice, page, limit) {
 		let _category = 'all';
 		let _sortBy = 'createdAt';
 		let _sortType = 'desc';
+		let _minPrice = 0;
+		let _maxPrice = Infinity;
 
 		if (category != 'all' && category) {
 			_category = category;
@@ -23,9 +25,25 @@ class ProductService {
 		if (sortBy) {
 			_sortBy = sortBy;
 			_sortType = sortType;
+			_minPrice = minPrice ? minPrice : _minPrice;
+			_maxPrice = maxPrice ? maxPrice : _maxPrice;
 		}
 
-		let querySelector = _category === 'all' ? {} : { category: _category };
+		let querySelector =
+			_category === 'all'
+				? {
+						price: {
+							$gte: _minPrice,
+							$lte: _maxPrice,
+						},
+				  }
+				: {
+						price: {
+							$gte: _minPrice,
+							$lte: _maxPrice,
+						},
+						category: _category,
+				  };
 		return Product.find(querySelector)
 			.skip(page * limit)
 			.limit(limit)
@@ -35,14 +53,32 @@ class ProductService {
 			});
 	}
 
-	count(category) {
+	count(category, minPrice, maxPrice) {
 		let _category = 'all';
+		let _minPrice = 0;
+		let _maxPrice = Infinity;
+		_minPrice = minPrice ? minPrice : _minPrice;
+		_maxPrice = maxPrice ? maxPrice : _maxPrice;
 
 		if (category != 'all' && category) {
 			_category = category;
 		}
 
-		let querySelector = _category === 'all' ? {} : { category: _category };
+		let querySelector =
+			_category === 'all'
+				? {
+						price: {
+							$gte: _minPrice,
+							$lte: _maxPrice,
+						},
+				  }
+				: {
+						price: {
+							$gte: _minPrice,
+							$lte: _maxPrice,
+						},
+						category: _category,
+				  };
 		return Product.countDocuments(querySelector).then((total) => {
 			return total;
 		});

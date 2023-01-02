@@ -18,6 +18,15 @@ module.exports = function Cart(oldCart) {
 		this.totalPrice += storedItem.product.price * quantity;
 	};
 
+	this.delete = function (productId) {
+		var storedItem = this.items[productId];
+		if (storedItem) {
+			this.totalQuantity -= storedItem.quantity;
+			this.totalPrice -= storedItem.price;
+			delete this.items[productId];
+		}
+	};
+
 	// convert objects to array
 	this.getItemsArray = function () {
 		var arr = [];

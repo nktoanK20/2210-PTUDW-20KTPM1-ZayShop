@@ -77,7 +77,6 @@ class MeController {
 		let message = req.query.message;
 		res.render('me/orders', {
 			orders,
-			ordersJSON: JSON.stringify(orders),
 			message,
 		});
 	}

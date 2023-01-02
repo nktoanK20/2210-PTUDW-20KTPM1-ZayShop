@@ -39,6 +39,14 @@ class ShopController {
 		res.redirect(req.get('referer'));
 	}
 
+	// [DELETE] /remove-from-cart/:id
+	async removeFromCart(req, res, next) {
+		let cart = new Cart(req.session.cart ? req.session.cart : {});
+		cart.delete(req.params.id);
+		req.session.cart = cart;
+		res.redirect('/shop/cart');
+	}
+
 	// [GET] /checkout
 	showCheckout(req, res, next) {
 		if (!req.session.cart) {
@@ -95,22 +103,34 @@ class ShopController {
 		}
 		const limit = process.env.LIMIT_PER_PAGE;
 
+		const totalPages = Math.ceil(
+			(await ProductService.count(
+				req.query.category,
+				req.query.minPrice,
+				req.query.maxPrice,
+			)) / limit,
+		);
+		page++;
+		if (page > totalPages) {
+			page = totalPages;
+		}
+
+		page--;
 		let products = await ProductService.get(
 			req.query.category,
 			req.query.sortBy,
 			req.query.sortType,
+			req.query.minPrice,
+			req.query.maxPrice,
 			page,
 			limit,
 		);
 
-		const totalPages = Math.ceil(
-			(await ProductService.count(req.query.category)) / limit,
-		);
-
+		page++;
 		res.render('shop/index', {
 			products,
 			totalPages,
-			currentPage: page + 1,
+			currentPage: page,
 		});
 	}
 }

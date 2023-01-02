@@ -7,6 +7,8 @@ module.exports = function SortMiddleware(req, res, next) {
 		Object.assign(res.locals._sort, {
 			sortBy: req.query.sortBy,
 			sortType: req.query.sortType,
+			minPrice: req.query.minPrice,
+			maxPrice: req.query.maxPrice,
 		});
 	}
 

@@ -81,13 +81,13 @@
                                 <strong>Price (₫) From:</strong>
                             </label>
 
-                            <input class="col-md-3" type="number" name="minPrice" value="0" min="0">
+                            <input class="col-md-3 min-price-option" type="number" name="minPrice" value="" min="0">
 
                             <label class="col-md-1">
                                 <strong>To</strong>
                             </label>
 
-                            <input class="col-md-3" type="number" name="maxPrice" value="0" min="0">
+                            <input class="col-md-3 max-price-option" type="number" name="maxPrice" value="" min="0">
 
                             <label class="col-md text-md-end">
                                 <strong>Sort By:</strong>
@@ -192,12 +192,15 @@
 {{> brands}}
 
 
-<div hidden="true" id="previous-sort-stored" sortBy={{_sort.sortBy}} sortType={{_sort.sortType}}></div>
+<div hidden="true" id="previous-sort-stored" sortBy={{_sort.sortBy}} sortType={{_sort.sortType}}
+    minPrice={{_sort.minPrice}} maxPrice={{_sort.maxPrice}}></div>
 
 <script>
     var sortProductForm;
     var sortByOptions;
     var sortTypeOptions;
+    var minPriceOption;
+    var maxPriceOption;
     var sortProductsSubmitBtn;
     var previousSortStored;
     var pageInput;
@@ -205,12 +208,16 @@
         sortProductForm = $('form[name="sort-product-form"]');
         sortByOptions = $('select.sort-by-options');
         sortTypeOptions = $('select.sort-type-options');
+        minPriceOption = $('input.min-price-option');
+        maxPriceOption = $('input.max-price-option');
         sortProductsSubmitBtn = $('.sort-products-submit-btn');
         previousSortStored = document.getElementById('previous-sort-stored');
         pageInput = document.getElementById('input-page-link');
 
         sortByOptions.val(previousSortStored.getAttribute("sortBy")).change();
         sortTypeOptions.val(previousSortStored.getAttribute("sortType")).change();
+        minPriceOption.val(previousSortStored.getAttribute("minPrice")).change();
+        maxPriceOption.val(previousSortStored.getAttribute("maxPrice")).change();
     });
 
     function inputPageForForm(page) {
